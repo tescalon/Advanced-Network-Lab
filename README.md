@@ -2,7 +2,7 @@
 
 [![Statut du Projet](https://img.shields.io/badge/Statut-En%20Cours-orange)](./documentation/objectifs.md)
 [![Technologies Principales](https://img.shields.io/badge/Tech-pfSense%2C%20Proxmox%2C%20Ansible-blue)](./documentation/architecture.md)
-[![Focus Réseau & Sécurité](https://img.shields.io/badge/Focus-Cybers%C3%A9curit%C3%A9%20%26%20GRC-red)](./documentation/rapport_technique.md)
+[![Focus Réseau & Sécurité](https://img.shields.io/badge/Focus-R%C3%A9seau%20%26%20Cybers%C3%A9curit%C3%A9-red)](./documentation/rapport_technique.md)
 
 Ce dépôt documente le déploiement d'un Home Lab réseau complexe, virtualisé sur des hôtes **Proxmox VE**, simulant une infrastructure d'entreprise hautement segmentée. Le projet met en évidence la maîtrise du **routage sécurisé (pfSense)**, la gestion des accès distants (**VPN**), l'**automatisation (Ansible)**, et l'**audit/GRC** via des outils professionnels de **Documentation (NetBox)** et de **Monitoring (LibreNMS/Grafana)**.
 

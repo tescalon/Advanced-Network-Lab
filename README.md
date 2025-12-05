@@ -24,7 +24,7 @@
 
 ---
 
-## 1. Piliers Architecturaux et Sécurité
+## 1. 🏢  Piliers Architecturaux et Sécurité
 
 Le projet dépasse la simple connectivité pour simuler un environnement critique où chaque flux est justifié. L'approche est celle du **"Security by Design"** : l'architecture privilégie une segmentation stricte et une auditabilité totale.
 
@@ -37,14 +37,14 @@ Le projet dépasse la simple connectivité pour simuler un environnement critiqu
 
 ---
 
-## 2. Isolation L2 : "Physical Virtual Segregation"
+## 2.🔌 Isolation L2 : "Physical Virtual Segregation"
 
 Cette architecture répond à une problématique spécifique liée à la sécurité des environnements virtualisés imbriqués (*Nested Virtualization*).
 
 > **⚠️ Le Risque Identifié (Threat Model)**
 > Dans les environnements virtuels, la gestion des tags VLAN (**802.1Q**) peut être aléatoire (phénomène de *VLAN Stripping*), introduisant un risque majeur de **VLAN Hopping**. Un attaquant pourrait théoriquement "sauter" d'une zone compromise (DMZ) vers une zone sûre (LAN) sans passer par le filtrage du pare-feu.
 
-### 🛡️ La Solution : "Air Gap Virtuel"
+### La Solution : "Air Gap Virtuel"
 
 Au lieu de faire passer tous les réseaux sur un seul câble virtuel (Mode Trunk), nous appliquons une **isolation stricte par interface**.
 * **Approche Classique (Rejetée) :** 1 vNIC avec Trunk VLAN $\rightarrow$ Risque de fuite.
@@ -52,7 +52,7 @@ Au lieu de faire passer tous les réseaux sur un seul câble virtuel (Mode Trunk
 
 ---
 
-## 3. Architecture & Inventaire IPAM
+## 3.🏗️ Architecture & Inventaire IPAM
 
 Le cœur du réseau est hébergé sur le site principal. Il concentre les fonctions de sécurité périmétrique et de gouvernance.
 
@@ -74,14 +74,14 @@ L'adressage utilise la RFC1918 et une logique géographique stricte.
 
 ---
 
-## 4. Ingénierie & Durcissement
+## 4. 🛡️ Ingénierie & Durcissement
 
 Cette section détaille les choix techniques effectués pour renforcer la sécurité et la stabilité du système.
 
 ### 4.1. Configuration pfSense (Cœur de Réseau)
 *Rôle : Security Gateway & Point de terminaison VPN.*
 
-#### 🔌 Interfaces & Ségrégation
+#### Interfaces & Ségrégation
 Chaque interface correspond à une zone de sécurité isolée physiquement (vNIC distincte).
 
 | Interface | Zone | IP / CIDR | Rôle & Politique de Sécurité |
@@ -91,20 +91,20 @@ Chaque interface correspond à une zone de sécurité isolée physiquement (vNIC
 | **SECOPS** (`em2`) | *DMZ* | `10.50.10.254/24` | **Zone Démilitarisée.** Isolation stricte (Pas d'accès initié vers le LAN). |
 | **VPN** (`em3`) | *Overlay* | `10.10.20.1/24` | Interface virtuelle **WireGuard**. Transport chiffré inter-sites. |
 
-#### ⚙️ Optimisation Kernel (Intégrité des Données)
+#### Optimisation Kernel (Intégrité des Données)
 > **Configuration Critique : Hardware Checksum Offload = DISABLED**
 >
 > * **Justification Technique :** Les drivers paravirtualisés (**VirtIO**) calculent parfois mal les sommes de contrôle (Checksums) TCP/UDP.
 > * **Impact évité :** Empêche la corruption silencieuse des paquets et l'apparition de faux positifs sur les systèmes de détection d'intrusion (IDS).
 
-#### 🛡️ Services Réseau & Résilience
+#### Services Réseau & Résilience
 * **DNS Resolver (Unbound) :** Mode récursif avec *Host Overrides* pour le domaine interne `netbox.homelab`. *(Gain GRC : Évite la dépendance aux DNS publics et masque la topologie interne (Privacy)).*
 * **Auto Config Backup (ACB) :** Sauvegarde chiffrée (**AES-256**) automatique dans le cloud pfSense. *(Gain GRC : Garantit un **RTO (Recovery Time Objective)** minimal en cas de crash matériel).*
 
 ### 4.2. Serveur d'Administration (`srv-admin-siege: 10.50.10.10`)
 *Type : Conteneur LXC (ID 105)*
 
-#### 📦 Architecture : "Docker on LXC"
+#### Architecture : "Docker on LXC"
 L'architecture utilise une imbrication de conteneurs (Nesting) pour optimiser les ressources sans sacrifier la sécurité.
 * **Justification Hardening (Durcissement) :**
     * **LXC Non-Privilégié (Unprivileged) :** Le `root` du conteneur est mappé sur un utilisateur standard de l'hôte.
@@ -114,7 +114,7 @@ L'architecture utilise une imbrication de conteneurs (Nesting) pour optimiser le
 
 ---
 
-## 5. Stack Technique Réseau & Sécurité & GRC
+## 🛠️ 5. Stack Technique Réseau & Sécurité & GRC
 
 La chaîne d'outillage est centralisée dans la DMZ pour respecter la **Ségrégation des Tâches (SoD)**.
 
@@ -154,7 +154,7 @@ Nous adoptons une stratégie de traitement à la périphérie (**Edge Computing*
 | <img src="https://github.com/tescalon/Homelab-Network-Secops/blob/main/docs/images/logo/ntopng.png?raw=true" width="60"> | **ntopng** | **Analyse de Flux (Edge).** Détection d'anomalies et analyse comportementale du trafic à la périphérie (Agence). |
 ---
 
-## 6. Interconnexion Sécurisée (WireGuard)
+## 6. 🔒 Interconnexion Sécurisée (WireGuard)
 
 Choix technologique : **WireGuard** (vs IPsec/OpenVPN).
 
@@ -169,7 +169,7 @@ Choix technologique : **WireGuard** (vs IPsec/OpenVPN).
 
 ---
 
-## 7. Politique de Sécurité (Zero Trust)
+## 7. 🛡️ Politique de Sécurité (Zero Trust)
 
 **Stratégie appliquée :** Zero Trust (Default Deny). Le pare-feu est configuré pour bloquer par défaut tout trafic non explicitement autorisé.
 
@@ -186,11 +186,10 @@ Choix technologique : **WireGuard** (vs IPsec/OpenVPN).
 
 ---
 
-## 8. Aperçu Visuel & Preuves de Concept
+## 8. 📸 Aperçu Visuel & Preuves de Concept
 
 Cette section illustre la mise en œuvre technique des politiques de sécurité et de gouvernance définies dans le DAT.
 
-### 📸 Captures d'Écran à Fournir
 1.  **Ségrégation Physique Virtuelle (Hyperviseur) :** Configuration Proxmox montrant l'isolation stricte des zones via des ponts Linux distincts.
     * `docs/images/proxmox_network_segregation.png`
 2.  **Politique de Filtrage "Zero Trust" :** Règles pfSense sur l'interface DMZ. Illustration de la règle **BLOCK** DMZ $\rightarrow$ LAN.
@@ -227,18 +226,18 @@ Ce plan d'action définit les évolutions futures pour maintenir le niveau de s�
 
 Ce projet met en œuvre des compétences transversales en ingénierie système et sécurité.
 
-### 🛡️ Cybersécurité & Hardening
+### Cybersécurité & Hardening
 * **Défense en Profondeur :** Conception d'une architecture cloisonnée (DMZ, LAN, Management) avec ségrégation stricte au niveau 2 (vNICs distinctes).
 * **Stratégie Zero Trust :** Application de politiques de pare-feu "Default Deny" et restriction des flux inter-VLAN.
 * **VPN & Cryptographie :** Déploiement de tunnels **WireGuard** site-à-site (Configuration des clés, routage statique).
 * **Accès Distant Sécurisé :** Mise en place d'un tunnel **Cloudflare Zero Trust** pour l'administration sans exposition de surface d'attaque (No Open Ports).
 
-### 📐 Architecture & Réseau (NetOps)
+### Architecture & Réseau (NetOps)
 * **Gouvernance des Données (GRC) :** Utilisation de **NetBox** comme *Source of Truth* (SoT) pour piloter l'inventaire.
 * **Supervision Hybride :** Implémentation d'une stratégie de monitoring centralisée (**LibreNMS/SNMPv3**) couplée à une analyse de flux déportée en "Edge" (**ntopng**).
 * **Virtualisation Avancée :** Maîtrise de l'hyperviseur **Proxmox VE** (Gestion des ponts Linux, conteneurs LXC non-privilégiés, nesting Docker).
 
-### ⚙️ Automatisation & Audit (DevSecOps)
+### Automatisation & Audit (DevSecOps)
 * **Infrastructure as Code (IaC) :** Utilisation d'**Ansible** pour le déploiement standardisé des configurations et le durcissement des accès (Clés SSH).
 * **Audit & Traçabilité :** Mise en place d'**Oxidized** pour le versioning automatique des configurations réseau (Détection de *Configuration Drift*).
 * **Conteneurisation :** Orchestration de stacks applicatives via **Docker Compose** dans des environnements contraints.

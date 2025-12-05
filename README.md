@@ -13,14 +13,14 @@
 
 1.  [Piliers Architecturaux et Sécurité](#1--piliers-architecturaux-et-sécurité)
 2.  [Isolation L2 : "Physical Virtual Segregation"](#2-isolation-l2--physical-virtual-segregation)
-3.  [Architecture & Inventaire IPAM](#3-architecture--inventaire-ipam)
-4.  [Ingénierie & Durcissement](#4-ingénierie--durcissement)
-5.  [Stack GRC et Automatisation](#5-stack-grc-et-automatisation)
-6.  [Interconnexion Sécurisée (WireGuard)](#6-interconnexion-sécurisée-wireguard)
-7.  [Politique de Sécurité (Zero Trust)](#7-politique-de-sécurité-zero-trust)
-8.  [Aperçu Visuel & Preuves de Concept](#8-aperçu-visuel--preuves-de-concept)
-9.  [Roadmap & Perspectives d'Évolution](#9-roadmap--perspectives-dévolutions)
-10. [Compétences Démontrées](#10-compétences-démontrées)
+3.  [Architecture & Inventaire IPAM](#3%EF%B8%8F-architecture--inventaire-ipam)
+4.  [Ingénierie & Durcissement](#4-%EF%B8%8F-ingénierie--durcissement)
+5.  [Stack GRC et Automatisation](#%EF%B8%8F-5-stack-technique-réseau--sécurité--grc)
+6.  [Interconnexion Sécurisée (WireGuard)](#6--interconnexion-sécurisée-wireguard)
+7.  [Politique de Sécurité (Zero Trust)](#7-%EF%B8%8F-politique-de-sécurité-zero-trust)
+8.  [Aperçu Visuel & Preuves de Concept](#8--aperçu-visuel--preuves-de-concept)
+9.  [Roadmap & Perspectives d'Évolution](#9-%EF%B8%8F-roadmap--perspectives-dévolution)
+10. [Compétences Démontrées](#10--compétences-démontrées)
 
 ---
 

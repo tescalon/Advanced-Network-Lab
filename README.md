@@ -11,7 +11,7 @@
 
 ## 📑 Table des Matières (Navigation Rapide)
 
-1.  [🏢 Piliers Architecturaux et Sécurité](#1-piliers-architecturaux-et-sécurité)
+1.  [Piliers Architecturaux et Sécurité](#1-piliers-architecturaux-et-sécurité)
 2.  [Isolation L2 : "Physical Virtual Segregation"](#2-isolation-l2--physical-virtual-segregation)
 3.  [Architecture & Inventaire IPAM](#3-architecture--inventaire-ipam)
 4.  [Ingénierie & Durcissement](#4-ingénierie--durcissement)

@@ -1,1 +1,118 @@
+version: '3.8'
+
+services:
+  # NETBOX
+  netbox:
+    image: netboxcommunity/netbox:latest
+    container_name: netbox
+    ports:
+      - "8000:8080"
+    environment:
+      - ALLOWED_HOSTS=*
+      - DB_HOST=postgres
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=netbox_password
+      - REDIS_HOST=redis
+      - SECRET_KEY=pasword31
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./netbox-media:/opt/netbox/netbox/media
+
+  netbox-worker:
+    image: netboxcommunity/netbox:latest
+    command: /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py rqworker
+    environment:
+      - ALLOWED_HOSTS=*
+      - DB_HOST=postgres
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=netbox_password
+      - REDIS_HOST=redis
+      - SECRET_KEY=password31
+    depends_on:
+      - netbox
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: netbox-postgres
+    environment:
+      - POSTGRES_DB=netbox
+      - POSTGRES_USER=netbox
+      - POSTGRES_PASSWORD=password31
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: netbox-redis
+    volumes:
+      - ./redis-data:/data
+
+
+  # LIBRENMS
+  librenms:
+    image: librenms/librenms:latest
+    container_name: librenms
+    ports:
+      - "80:8000"
+    environment:
+      - DB_HOST=mariadb
+      - DB_NAME=librenms
+      - DB_USER=librenms
+      - DB_PASSWORD=password31
+      - TZ=Europe/Paris
+      - PUID=1000
+      - PGID=1000
+    depends_on:
+      - mariadb
+    volumes:
+      - ./librenms/rrd:/opt/librenms/rrd
+     # - ./librenms/logs:/opt/librenms/logs
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: librenms-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=librenms
+      - MYSQL_USER=librenms
+      - MYSQL_PASSWORD=password31
+    volumes:
+      - ./mariadb-data:/var/lib/mysql
+    command:
+      - "mysqld"
+      - "--innodb-file-per-table=1"
+      - "--lower-case-table-names=0"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
+  # OXIDIZED
+  oxidized:
+    image: oxidized/oxidized:latest
+    container_name: oxidized
+    ports:
+      - "8888:8888" # Pour acc  der    l'interface web d'Oxidized
+    environment:
+      - OXIDIZED_THREADS=2
+    volumes:
+    volumes:
+      - ./oxidized-config:/root/.config/oxidized # Stocke configs et DB des routeurs
+    restart: unless-stopped
+
+
+  # GRAFANA
+#  grafana:
+#    image: grafana/grafana:latest
+#    container_name: grafana
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - ./grafana-data:/var/lib/grafana
+#    depends_on:
+#      - librenms
+#    restart: unless-stopped
+
 
